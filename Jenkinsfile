@@ -10,8 +10,6 @@ node() {
 	}
 
 	stage('Build') {
-		dockerExecute(script: this, dockerImage: 'node:8.14.0-alpine') {
-			mtaBuild script: this, mtaJarLocation: "${JENKINS_HOME}/userContent/mta.jar", buildTarget: 'CF'
-		}
+		mtaBuild script: this, dockerImage: 'node:8.14.0-alpine', mtaJarLocation: "${JENKINS_HOME}/userContent/mta.jar", buildTarget: 'CF'
 	}
 }
