@@ -8,6 +8,7 @@
 # root
 /.mta/
 /*.mtar
+/.idea/
 
 # db
 db/**/gen/
