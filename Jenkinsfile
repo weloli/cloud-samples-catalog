@@ -6,7 +6,7 @@ node() {
 	stage('Clone') {
 		deleteDir()
 		checkout scm
-		setupPipelineEnvironment script: this
+		setupCommonPipelineEnvironment script: this
 	}
 
 	stage('Build') {
