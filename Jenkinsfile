@@ -12,4 +12,8 @@ node() {
 	stage('Build') {
 		mtaBuild script: this, dockerImage: 'mta:latest', buildTarget: 'CF'
 	}
+
+	stage('Deploy') {
+		cloudFoundryDeploy script: this
+	}
 }
