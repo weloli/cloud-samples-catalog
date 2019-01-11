@@ -2,10 +2,8 @@
 	"name": "@sap/cloud-samples-catalog",
 	"description": "Standalone application for a product catalog reusing common business types",
 	"version": "1.0.0",
-	"devDependencies": {
-		"@sap/cds": "2.3.1"
-	},
 	"dependencies": {
+		"@sap/cds": "2.3.1",
 		"@sap/cloud-samples-foundation": "https://github.com/SAP/cloud-samples-foundation.git"
 	},
 	"repository": {
