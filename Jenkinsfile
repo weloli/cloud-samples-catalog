@@ -14,6 +14,6 @@ node() {
 	}
 
 	stage('Deploy') {
-		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin'
+		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin', mtaPath: '/project'
 	}
 }
