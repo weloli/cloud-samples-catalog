@@ -16,4 +16,8 @@ node() {
 	stage('Deploy') {
 		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin', mtaPath: 'cloud.samples.catalog.mtar'
 	}
+
+	stage('Test') {
+		newmanExecute script: this, newmanGlobals: 'integration/ProductCatalog.newman_globals.json', newmanEnvironment: 'integration/ProductCatalog.newman_environment.json', newmanCollection: 'integration/ProductCatalog.collection.json'
+	}
 }

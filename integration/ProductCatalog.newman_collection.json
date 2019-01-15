@@ -1,0 +1,2428 @@
+{
+	"info": {
+		"_postman_id": "a8c51870-2c82-43d5-9255-9a00a51169bc",
+		"name": "Product Catalog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Odata",
+			"item": [
+				{
+					"name": "Get OData Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ef74ddf-61fe-42d0-9569-091d940bafc1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get OData Metadata",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f26778ca-5dde-42ff-8a6d-55ccc66d7313",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$metadata",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$metadata"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fa48488a-9264-4453-9359-71e4645735f0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f432aa85-2068-4b10-8ab3-857e96dcf5b3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products Count",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e3195c1-38b4-4cd9-bc1e-17c588ef991a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches product count = 123\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"123\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/atomsvc+xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/Products/$count",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"Products",
+								"$count"
+							]
+						},
+						"description": "Get the number of products."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "758ae8f5-f80d-4fad-ab0e-2a2907e25e0f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 200 OK\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_532c-7bc3-9838"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_532c-7bc3-9838\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_532c-7bc3-9838--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Get initial list of products"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Valuelists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "921a2cc9-a869-4573-9ccd-887149dc176f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string PriceRanges\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"PriceRanges\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string StockAvailabilities\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"StockAvailabilities\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string DimensionUnits\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"DimensionUnits\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string WeightUnits\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"WeightUnits\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string Categories\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Categories\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string Suppliers\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Suppliers\");",
+									"});",
+									"",
+									"pm.test(\"Body matches string Currencies\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Currencies\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_46d5-e234-7c45"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET PriceRanges?$skip=0&$top=100&$orderby=name%20asc&$select=code%2cname%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET StockAvailabilities?$skip=0&$top=100&$orderby=name%20asc&$select=code%2cname%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET DimensionUnits?$skip=0&$top=100&$orderby=code%20asc&$select=code%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET WeightUnits?$skip=0&$top=100&$orderby=code%20asc&$select=code%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Categories?$skip=0&$top=107&$orderby=ID%20asc&$select=ID%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Suppliers?$skip=0&$top=109&$orderby=ID%20asc&$select=ID%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Currencies?$skip=0&$top=107&$orderby=code%20asc&$select=code%2cname&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_46d5-e234-7c45--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Get value lists."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "546263a1-265b-4ee8-a721-905377b3f185",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8fd30d-dd72-4443-b84f-fc120cdc3fcd",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63118051-32de-4273-a737-370e6dabe4ce",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 201 Created\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"201 Created\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_5126-8c3d-2714"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_5126-8c3d-2714\r\nContent-Type: multipart/mixed; boundary=changeset_e226-7458-ad9a\r\n\r\n--changeset_e226-7458-ad9a\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1523967680522-310')\"},\"name\":\"test-name\",\"ID\":\"test-prod\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"1descr\",\"price\":\"11111\",\"currency\":\"AED\",\"baseUnit_code\":\"BAG\",\"height\":\"1111\",\"dimensionUnit_code\":\"CM\",\"width\":\"2222\",\"depth\":\"3333\",\"weight\":\"4444\"}\r\n--changeset_e226-7458-ad9a--\r\n\r\n--batch_5126-8c3d-2714--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product with same ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "14aae726-9191-492f-b9e5-9674d53e3018",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 400 Bad Request\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"code\\\":\\\"valueExists\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"valueExists\\\"\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_5126-8c3d-2714"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_5126-8c3d-2714\r\nContent-Type: multipart/mixed; boundary=changeset_e226-7458-ad9a\r\n\r\n--changeset_e226-7458-ad9a\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1523967680522-310')\"},\"name\":\"test-name\",\"ID\":\"test-prod\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"1descr\",\"price\":\"11111\",\"currency\":\"AED\",\"baseUnit_code\":\"BAG\",\"height\":\"1111\",\"dimensionUnit_code\":\"CM\",\"width\":\"2222\",\"depth\":\"3333\",\"weight\":\"4444\"}\r\n--changeset_e226-7458-ad9a--\r\n\r\n--batch_5126-8c3d-2714--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ba99dee-a279-49df-9f3d-48e887c9012c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 200 OK\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									"",
+									"var product_etag_index = pm.response.text().indexOf('ETag:',1);",
+									"var product_etag = pm.response.text().substr(product_etag_index+6, 24);",
+									"pm.environment.set(\"product_etag\", product_etag);",
+									"",
+									"var stock_guid_index = pm.response.text().indexOf('\\\"stock_ID\\\":\\\"',1);",
+									"var stock_guid = pm.response.text().substr(stock_guid_index+12, 36);",
+									"pm.environment.set(\"stock_ID\", stock_guid);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products('test-prod')?$expand=category%2csupplier%2cbaseUnit%2cdimensionUnit%2cweightUnit HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Stock of created Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0022137e-2a70-4d6f-a09e-e2dddee991bd",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 200 OK\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Stocks(guid'{{stock_ID}}') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Product/Stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5961214c-ac75-4583-bd2d-121fe9f99147",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 200 OK\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products('test-prod')/stock HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4aa9d101-cd6c-491f-9e6c-361adc79ab01",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string 204 No Content\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"204 No Content\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_6b38-84b6-4547"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_6b38-84b6-4547\r\nContent-Type: multipart/mixed; boundary=changeset_8df3-6332-7ba2\r\n\r\n--changeset_8df3-6332-7ba2\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"test-name update\",\"description\":\"test descr update\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"price\":\"666666\",\"currency\":\"EUR\",\"baseUnit_code\":\"ST\",\"height\":\"1\",\"width\":\"2\",\"depth\":\"3\",\"weight\":\"4\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"KG\",\"ID\":\"test-proc\"}\r\n--changeset_8df3-6332-7ba2--\r\n\r\n--batch_6b38-84b6-4547--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b776a211-e48d-4de4-bc34-b6e37b693b49",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string 204 No Content\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"204 No Content\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_9e4e-f08c-bffa"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_9e4e-f08c-bffa\r\nContent-Type: multipart/mixed; boundary=changeset_b18b-7c22-1728\r\n\r\n--changeset_b18b-7c22-1728\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nDELETE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\nIf-Match: *\r\n\r\n\r\n--changeset_b18b-7c22-1728--\r\n\r\n--batch_9e4e-f08c-bffa--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Product deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71579bef-c360-4a38-97d7-73ac025559ba",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string 404 Not Found\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"404 Not Found\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test that the deleted Product entity is not available anymore."
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Stock of deleted Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "118cdf5c-4b88-4d35-8727-68bd8302c4d7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string 404 Not Found\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"404 Not Found\");",
+									"});",
+									"",
+									"",
+									"",
+									"pm.environment.unset(\"stock_ID\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Stocks(guid'{{stock_ID}}') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test that the Stock entry of the deleted Product entry got deleted."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b01ef959-e89f-4f88-9bd1-1986b643a827",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "32cd4c21-6cd5-49a2-a4cd-2817db134752",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Products Filter",
+			"item": [
+				{
+					"name": "Filter by Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(category_ID%20eq%20guid%270925a9de-37f3-4dca-862b-d63b06302f23%27)&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Supplier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(supplier_ID%20eq%20guid%2705d42e0a-0330-48ea-a915-22cc3c8efb3f%27%20or%20supplier_ID%20eq%20guid%2708b497e8-5071-4cd8-9738-6bcd950c0d0c%27)&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Description",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(startswith(description,%27Flexible%20Laptop%20with%202%2c5%20GHz%20Quad%20Core%27))&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Technical Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df03fbd2-b066-4865-9b04-1f289070334f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=((height%20eq%203m)%20and%20(width%20eq%2030m)%20and%20(depth%20eq%2018m)%20and%20(weight%20eq%204.2m))&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Technical Data - depth before width",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "df03fbd2-b066-4865-9b04-1f289070334f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=((height%20eq%203m)%20and%20(depth%20eq%2018m)%20and%20(width%20eq%2030m)%20and%20(weight%20eq%204.2m))&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "previously filter sequence depth befor width did now work"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(stock/minimumQuantity%20eq%201m)&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Price and Currency",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=((price%20gt%20500m)%20and%20(currency%20eq%20%27EUR%27))&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_3475-d049-4548"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_3475-d049-4548\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(stock/availability_code%20eq%203)&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_3475-d049-4548--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test filter of stock/availablity_code eq 3"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by PriceRange",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f067cac2-0731-44c3-97c5-0276ddff3e1e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string '200 OK'\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&$filter=(priceRange_code%20eq%201)&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22b048c5-0017-48ab-a773-982733a51138",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"// not yet available https://github.wdf.sap.corp/cap/overflow/issues/29",
+									"//pm.test(\"Body matches string '200 OK'\", function () {",
+									"//    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"//});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_d44f-1794-4bcb"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_d44f-1794-4bcb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products?$skip=0&$top=25&$orderby=name%20asc&search=notebook&$select=image%2cID%2cname%2ccategory%2fname%2csupplier%2fname%2csupplier%2cstock%2favailability%2fcode%2cstock%2favailability%2fname%2cprice%2ccurrency&$expand=category%2csupplier%2cstock%2favailability&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_d44f-1794-4bcb--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e91ecb55-b375-4391-87d9-ae289d1c477b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1bb4de87-9184-466a-a5ff-94657af91f37",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Data Validation create product",
+			"item": [
+				{
+					"name": "Create Product price negativ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "331d7dae-8031-4751-912a-ddc8d5a99736",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"",
+									"var myCode = pm.response.text().has(\"400 Bad Request\");",
+									"if (myCode) {",
+									"  pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"  });",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"name\":\"testname\",\"ID\":\"1234567890\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"testdescription\",\"price\":\"-1\",\"currency\":\"ANG\",\"baseUnit_code\":\"BOX\",\"height\":\"22222\",\"width\":\"33333\",\"depth\":\"44444\",\"weight\":\"55555\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"G\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product with negative price value."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product with invalid Valuehelps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1317a9fe-ea73-4fca-bb7c-10e026c49481",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"currency\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"currency\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"dimensionUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"dimensionUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"weightUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"weightUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"baseUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"baseUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"category_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"category_ID\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"supplier_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"supplier_ID\");",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"name\":\"testname\",\"ID\":\"1234567890\",\"category_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"supplier_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"description\":\"testdescription\",\"price\":\"1\",\"currency\":\"000\",\"baseUnit_code\":\"XXX\",\"height\":\"22222\",\"width\":\"33333\",\"depth\":\"44444\",\"weight\":\"55555\",\"dimensionUnit_code\":\"XXX\",\"weightUnit_code\":\"XXX\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product with invalid valuelist values. Test result checks that value list name of invalid value is in response."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product negativ values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e3daa4e-9250-46f9-819a-a87a24a8d0a2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message \\\"code\\\":\\\"negativeNumber\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"negativeNumber\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for nagative number \\\"price\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"price\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for nagative number \\\"height\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"height\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for nagative number \\\"width\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"width\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for nagative number \\\"depth\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"depth\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for nagative number \\\"weight\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"weight\\\"\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"name\":\"testname\",\"ID\":\"1234567890\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"testdescription\",\"price\":\"-1\",\"currency\":\"ANG\",\"baseUnit_code\":\"BOX\",\"height\":\"-2\",\"width\":\"-3\",\"depth\":\"-4\",\"weight\":\"-5\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"G\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product where non-negative values are set negativ"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product without mandatory properties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "866375d2-5b34-49bb-954a-63fc8bb24893",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message for value \\\"valueIsMandatory\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"valueIsMandatory\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"ID\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"name\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"name\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"description\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"description\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"category_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"category_ID\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"supplier_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"supplier_ID\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"baseUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"baseUnit_code\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"price\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"price\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value of \\\"currency\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"currency\\\"\");",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"height\":\"22222\",\"width\":\"33333\",\"depth\":\"44444\",\"weight\":\"55555\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"G\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product without mandatory property values. Test result checks that missing mandatory property name is in response."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product empty mandatory values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ca61064-3db9-4fdb-9173-a0a5f2e37cd8",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message \\\"code\\\":\\\"valueIsMandatory\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"valueIsMandatory\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"ID\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"name\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"name\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"description\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"description\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"baseUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"baseUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"currency\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"currency\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"name\":\"\",\"ID\":\"\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"\",\"price\":\"1\",\"currency\":\"\",\"baseUnit_code\":\"\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product where mandatory field values are empty strings.\nThe test checks that correct message error codes are included in the response."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product  empty mandatory values of type guid empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1cecd3c7-8f03-4e73-bd7f-092d61fd7479",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message the literal \\'\\' is not formatted properly available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The literal \\'\\' is not formatted properly\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nsap-cancel-on-close: true\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1521216731482-574')\"},\"name\":\"\",\"ID\":\"\",\"category_ID\":\"\",\"supplier_ID\":\"\",\"description\":\"\",\"price\":\"1\",\"currency\":\"\",\"baseUnit_code\":\"\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to create a product where mandatory field values of type guid are empty strings.\nThe test fails with The literal \\'\\' is not formatted properly."
+					},
+					"response": []
+				}
+			],
+			"description": "These are negative tests to check that data validation on create works.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a3948018-d52b-48c1-b3a6-3889e53002d9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb0279d0-d5c5-4757-83af-f9fedf3afd2d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Data Validation update product",
+			"item": [
+				{
+					"name": "Create Product for update tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63118051-32de-4273-a737-370e6dabe4ce",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 201 Created\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"201 Created\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_2ff9-3ebf-7c95"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_2ff9-3ebf-7c95\r\nContent-Type: multipart/mixed;boundary=changeset_f6bd-8fc3-e0cb\r\n\r\n--changeset_f6bd-8fc3-e0cb\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nPOST Products HTTP/1.1\r\nContent-Type: application/json\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nx-csrf-token: R4L4Asw9-j6B4w7l8HLZxddNcXL4o13hhwUY\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"type\":\"{{service}}.Products\",\"uri\":\"{{path}}{{service}}/Products('id-1523967680522-310')\"},\"name\":\"test-name\",\"ID\":\"test-prod\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"1descr\",\"price\":\"11111\",\"currency\":\"AED\",\"baseUnit_code\":\"BAG\",\"height\":\"1111\",\"dimensionUnit_code\":\"CM\",\"width\":\"2222\",\"depth\":\"3333\",\"weight\":\"4444\"}\r\n--changeset_f6bd-8fc3-e0cb--\r\n\r\n--batch_2ff9-3ebf-7c95--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Product to get ETag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26689f40-b521-47da-91af-fb867d6e62eb",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code 200 OK\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"200 OK\");",
+									"});",
+									"",
+									"var product_etag_index = pm.response.text().indexOf('ETag:',1);",
+									"var product_etag = pm.response.text().substr(product_etag_index+6, 24);",
+									"pm.environment.set(\"product_etag\", product_etag);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_80ad-4c71-08e5"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_80ad-4c71-08e5\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET Products('test-prod')?$expand=category%2csupplier%2cbaseUnit%2cdimensionUnit%2cweightUnit HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_80ad-4c71-08e5--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product URL with empty Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dd0d608e-5c21-433c-8e2e-758564c63e80",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"// BCP ticket https://support.wdf.sap.corp/sap/support/message/1870120688",
+									"// Issue not fixed because Error does not state that key is empty",
+									"",
+									"pm.test(\"Body matches string for response code \\\"404 Not Found\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"404 Not Found\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_6b38-84b6-4547"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_6b38-84b6-4547\r\nContent-Type: multipart/mixed; boundary=changeset_8df3-6332-7ba2\r\n\r\n--changeset_8df3-6332-7ba2\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"test-name update\",\"description\":\"test descr update\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"price\":\"666666\",\"currency\":\"EUR\",\"baseUnit_code\":\"ST\",\"height\":\"1\",\"width\":\"2\",\"depth\":\"3\",\"weight\":\"4\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"KG\",\"ID\":\"test-proc\"}\r\n--changeset_8df3-6332-7ba2--\r\n\r\n--batch_6b38-84b6-4547--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product with empty key-value in url. Expects a 404 Not found."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product with invalid Valuehelps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ac4a71b-675f-4744-b9fe-cbfdf5b7cc92",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Message for invalid values \\\"code\\\":\\\"valueDoesNotExist\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"valueDoesNotExist\\\"\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Message for invalid value \\\"currency\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"currency\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"dimensionUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"dimensionUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"weightUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"weightUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"baseUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"baseUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"category_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"category_ID\");",
+									"});",
+									"",
+									"pm.test(\"Message for invalid value \\\"supplier_ID\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"supplier_ID\");",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"testname\",\"ID\":\"1234567890\",\"category_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"supplier_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"description\":\"testdescription\",\"price\":\"1\",\"currency\":\"000\",\"baseUnit_code\":\"XXX\",\"height\":\"22222\",\"width\":\"33333\",\"depth\":\"44444\",\"weight\":\"55555\",\"dimensionUnit_code\":\"XXX\",\"weightUnit_code\":\"XXX\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product with invalid valuelist values. Test result checks that value list name of invalid value is in response."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product negativ values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d0394d5-1f12-44d0-a946-5fbdfc78cc1b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message \\\"code\\\":\\\"negativeNumber\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"negativeNumber\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for negative number \\\"price\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"price\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for negative number \\\"height\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"height\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for negative number \\\"width\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"width\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for negative number \\\"depth\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"depth\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for negative number \\\"weight\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"target\\\":\\\"weight\\\"\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"testnameX\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"testdescription\",\"price\":\"-1\",\"currency\":\"ANG\",\"baseUnit_code\":\"BOX\",\"height\":\"-2\",\"width\":\"-3\",\"depth\":\"-4\",\"weight\":\"-5\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"G\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product where non-negative values are set negativ"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product mandatory values empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1d8ced5a-6760-4492-871e-b716c104f452",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message \\\"code\\\":\\\"valueIsMandatory\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"\\\"code\\\":\\\"valueIsMandatory\\\"\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"ID\\\" not available\", function () {",
+									"    pm.expect(pm.response.text()).to.not.include(\"\\\"ID\\\"\");",
+									"    // ID:\"\" not recognized as error because value is filled with ID from MERGE operation.",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"name\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"name\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"description\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"description\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"baseUnit_code\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"baseUnit_code\");",
+									"});",
+									"",
+									"pm.test(\"Message for mandatory value \\\"currency\\\" available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"currency\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"\",\"ID\":\"\",\"category_ID\":\"0925A9DE-37F3-4DCA-862B-D63B06302F23\",\"supplier_ID\":\"05D42E0A-0330-48EA-A915-22CC3C8EFB3F\",\"description\":\"\",\"price\":\"1\",\"currency\":\"\",\"baseUnit_code\":\"\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product where mantadory field values are empty strings.\nThe test checks that correct message error codes are included in the response."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product empty mandatory values of type guid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e486cd0-8317-4e2d-9a8d-9ddfc25e322d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message the literal \\'\\' is not formatted properly available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The literal \\'\\' is not formatted properly\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"\",\"ID\":\"\",\"category_ID\":\"\",\"supplier_ID\":\"\",\"description\":\"\",\"price\":\"1\",\"currency\":\"\",\"baseUnit_code\":\"\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product where mantadory field values of type guid are empty strings."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product  empty mandatory values of type numeric",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "803a3750-cf8b-4680-91fa-5f328fe93ccf",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"400 Bad Request\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");",
+									"});",
+									"",
+									"pm.test(\"Message the literal \\'\\' is not formatted properly available\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"The literal \\'\\' is not formatted properly\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"name\":\"\",\"ID\":\"\",\"category_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"supplier_ID\":\"AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA\",\"description\":\"\",\"price\":\"\",\"currency\":\"\",\"baseUnit_code\":\"\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product where mantadory field values of type numeric are empty."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product without mandatory properties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c83d293e-1b0c-4e3d-a1c3-1f7a1342f1d0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Body matches string for response code \\\"204 No Content\\\"\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"204 No Content\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_dd25-eb03-72e4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_dd25-eb03-72e4\r\nContent-Type: multipart/mixed; boundary=changeset_0958-90d1-f3f3\r\n\r\n--changeset_0958-90d1-f3f3\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nMERGE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nIf-Match: {{product_etag}}\r\nContent-Type: application/json\r\nContent-Length: 600\r\n\r\n{\"__metadata\":{\"uri\":\"{{prtcl}}{{host}}{{path}}{{service}}/Products('test-prod')\",\"type\":\"{{service}}.Products\"},\"height\":\"22222\",\"width\":\"33333\",\"depth\":\"44444\",\"weight\":\"55555\",\"dimensionUnit_code\":\"CM\",\"weightUnit_code\":\"G\"}\r\n--changeset_0958-90d1-f3f3--\r\n\r\n--batch_dd25-eb03-72e4--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						},
+						"description": "Test tries to update a product without mandatory property values. Test result checks the update got ok with 204. The java extension does not check on that."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product for update tests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b776a211-e48d-4de4-bc34-b6e37b693b49",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string 204 No Content\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"204 No Content\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "multipart/mixed"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/mixed;boundary=batch_9e4e-f08c-bffa"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "--batch_9e4e-f08c-bffa\r\nContent-Type: multipart/mixed; boundary=changeset_b18b-7c22-1728\r\n\r\n--changeset_b18b-7c22-1728\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nDELETE Products('test-prod') HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en\r\nsap-cancel-on-close: true\r\nx-csrf-token: abBOqM10-7BilXLCWlPzoUY4todlqTdRxME4\r\nIf-Match: *\r\n\r\n\r\n--changeset_b18b-7c22-1728--\r\n\r\n--batch_9e4e-f08c-bffa--"
+						},
+						"url": {
+							"raw": "{{prtcl}}{{host}}{{path}}{{service}}/$batch",
+							"host": [
+								"{{prtcl}}{{host}}{{path}}{{service}}"
+							],
+							"path": [
+								"$batch"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "These are negative tests to check that data validation on update works.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6a0f9a33-e364-4f4c-8d97-ac3dffc5e46a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b3e0635f-70c6-45cd-84ae-0f6bf1ab9b21",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "17af9bec-0c2b-42bd-988e-b1f19c0f59b9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5f1a37a0-f53c-40ba-afc3-7f8241aa8dcc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

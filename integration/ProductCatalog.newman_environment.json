@@ -1,0 +1,50 @@
+{
+  "_": {
+    "postman_variable_scope": "environment",
+    "postman_exported_at": "2018-04-10T12:21:38.083Z",
+    "postman_exported_using": "Postman/6.0.9"
+  },
+  "id": "9d161003-d924-49f9-83a2-7dcbc66a9bb9",
+  "name": "TestSpace_productcatalog",
+  "values": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "https://",
+      "key": "prtcl"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "epm-oliver-product-catalog-java.cfapps.sap.hana.ondemand.com",
+      "key": "host"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "/odata/v2/",
+      "key": "path"
+    },
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "clouds.products.CatalogService",
+      "key": "service"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2018-04-10T12:21:38.083Z",
+  "_postman_exported_using": "Newman/3.9.3"
+}
