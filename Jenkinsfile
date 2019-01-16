@@ -3,7 +3,7 @@
 @Library('piper-lib-os') _
 
 node() {
-	stage('Clone') {
+	stage('Prepare') {
 		deleteDir()
 		checkout scm
 		setupCommonPipelineEnvironment script: this
@@ -14,7 +14,7 @@ node() {
 	}
 
 	stage('Deploy') {
-		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin', mtaPath: 'cloud.samples.catalog.mtar'
+		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin', mtaPath: '*.mtar'
 	}
 
 	stage('Test') {
