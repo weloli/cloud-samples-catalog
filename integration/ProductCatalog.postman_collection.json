@@ -2213,7 +2213,7 @@
 					"response": []
 				},
 				{
-					"name": "Update Product  empty mandatory values of type numeric",
+					"name": "Update Product empty mandatory values of type numeric",
 					"event": [
 						{
 							"listen": "test",

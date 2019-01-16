@@ -18,6 +18,7 @@ node() {
 	}
 
 	stage('Test') {
-		newmanExecute script: this, dockerImage: 'my_newman:latest', newmanEnvironment: 'integration/ProductCatalog.postman_environment.json', newmanGlobals: 'integration/ProductCatalog.postman_globals.json'
+		newmanExecute script: this, dockerImage: 'my_newman:latest', newmanEnvironment: 'integration/ProductCatalog.postman_environment.json', failOnError: false
+		publishTestResults script: this, junit: [pattern: '**/newman/TEST-integration_ProductCatalog.xml']
 	}
 }
