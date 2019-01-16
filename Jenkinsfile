@@ -18,6 +18,6 @@ node() {
 	}
 
 	stage('Test') {
-		newmanExecute script: this, newmanGlobals: 'integration/ProductCatalog.newman_globals.json', newmanEnvironment: 'integration/ProductCatalog.newman_environment.json', newmanCollection: 'integration/ProductCatalog.collection.json'
+		newmanExecute script: this
 	}
 }
