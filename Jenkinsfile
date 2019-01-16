@@ -18,6 +18,6 @@ node() {
 	}
 
 	stage('Test') {
-		newmanExecute script: this
+		newmanExecute script: this, newmanEnvironment: '**/*.postman_environment.json', newmanGlobals: '**/*.postman_globals.json'
 	}
 }
