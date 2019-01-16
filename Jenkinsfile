@@ -18,6 +18,6 @@ node() {
 	}
 
 	stage('Test') {
-		newmanExecute script: this, dockerImage: 'my_newman:latest', newmanEnvironment: '**/*.postman_environment.json', newmanGlobals: '**/*.postman_globals.json'
+		newmanExecute script: this, dockerImage: 'my_newman:latest', newmanEnvironment: 'integration/ProductCatalog.postman_environment.json', newmanGlobals: 'integration/ProductCatalog.postman_globals.json'
 	}
 }
