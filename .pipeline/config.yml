@@ -5,5 +5,3 @@ steps:
       apiEndpoint: 'https://api.cf.sap.hana.ondemand.com'
       org: 'epm'
       space: 'oliver'
-  newmanExecute:
-    newmanInstallCommand: ''
