@@ -10,7 +10,7 @@ node() {
 	}
 
 	stage('Build') {
-		mtaBuild script: this, buildTarget: 'CF'
+		mtaBuild script: this, buildTarget: 'CF', dockerImage: 'mta:latest'
 	}
 
 	stage('Deploy') {
