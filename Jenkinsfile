@@ -10,11 +10,11 @@ node() {
 	}
 
 	stage('Build') {
-		mtaBuild script: this, buildTarget: 'CF', dockerImage: 'mta:latest'
+		mtaBuild script: this, buildTarget: 'CF'
 	}
 
 	stage('Deploy') {
-		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin', mtaPath: '*.mtar'
+		cloudFoundryDeploy script: this, deployTool: 'mtaDeployPlugin'
 	}
 
 	stage('Test') {
