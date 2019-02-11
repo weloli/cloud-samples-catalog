@@ -13,6 +13,7 @@ modules:
    requires:
      - name: product-catalog-hdi-container
      - name: product-catalog-logging
+
  - name: product-catalog-java
    type: java
    path: srv
