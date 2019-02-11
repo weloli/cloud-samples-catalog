@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"dependencies": {
 		"@sap/cds": "^3.5.0",
-		"@sap/cloud-samples-foundation": "https://github.com/SAP/cloud-samples-foundation.git"
+		"@sap/cloud-samples-foundation": "https://github.com/weloli/cloud-samples-foundation.git"
 	},
 	"repository": {
 		"type": "git",
